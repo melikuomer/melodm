@@ -2,7 +2,8 @@ import asyncio
 from typing import Annotated
 from melodm.database.manager import DBContext
 from melodm.types.document import Document, Settings, IndexMetadata, Field
-from pymongo import AsyncMongoClient
+
+
 import logging
 logging.basicConfig(
     level=logging.INFO,

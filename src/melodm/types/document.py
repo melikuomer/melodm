@@ -1,6 +1,6 @@
 from typing_extensions import Annotated
-from melodm.database.manager import get_current_db_manager
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from ..database.manager import get_current_db_manager
+from pydantic import BaseModel, ConfigDict, Field
 
 
 from typing import Any, ClassVar, Dict, List, Optional, Unpack
@@ -142,6 +142,10 @@ class Document(BaseModel):
 
     @classmethod
     async def find_one(cls, filter: Dict[str,Any]):
+      """
+      _id automatically converted to ObjectID.
+      Remaining conversions should be done manually
+      """
       mongo_id = filter.get("_id", None)
       if mongo_id is not None and isinstance(mongo_id, str):
         filter["_id"] = PyObjectId.validate(mongo_id)

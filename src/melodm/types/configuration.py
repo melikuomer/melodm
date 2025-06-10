@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 
 class Settings(BaseModel):
-  collection_name: str = "sa"
+  collection_name: Optional[str] = None
 
 @dataclass
 class IndexMetadata:

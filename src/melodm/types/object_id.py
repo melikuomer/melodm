@@ -24,7 +24,7 @@ class PyObjectId(str):
         )
 
     @classmethod
-    def validate(cls, value) -> ObjectId:
+    def validate(cls, value: str | ObjectId) -> ObjectId:
         if not ObjectId.is_valid(value):
             raise ValueError("Invalid ObjectId")
 
