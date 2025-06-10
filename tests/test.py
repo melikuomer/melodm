@@ -1,33 +1,34 @@
 import asyncio
+from typing import Annotated
 from melodm.database.manager import DBContext
-from melodm.types.document import Document, Settings
+from melodm.types.document import Document, Settings, IndexMetadata, Field
 from pymongo import AsyncMongoClient
-
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 class Auth(Document):
     name: str
-
+    val: Annotated[str,Field(),IndexMetadata(unique=True) ]
     db_model_settings= Settings(
       collection_name= "test",
-      indexed_fields= [
-          ("valla", -1),
-          ("mi", 1)
-      ]
     )
 
 async def test():
 
     async with DBContext("test") as db_context:
+      await Document.create_indexes()
       from datetime import datetime
-      auth = Auth(
-        _id="test_auth",
-        created_at=datetime.now(),
-        updated_at=datetime.now(),
-        name="Test"
-      )
-
-
-      val = await auth.insert()
-      print(val)
+      auth = await Auth.find_one({"_id": "68481be5444ebcdc37c48a1a"})
+      if auth is None:
+        print("none found")
+      else:
+        auth.val = "32"
+        auth.val = "32"
+        auth.val = "32"
+        auth.val = "32"
+        val = await auth.save()
 
 
 

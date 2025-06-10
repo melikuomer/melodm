@@ -1,4 +1,4 @@
-from logging import getLogger
+import logging
 from pymongo import AsyncMongoClient
 from pymongo.asynchronous.database import AsyncDatabase
 
@@ -6,7 +6,7 @@ from pymongo.asynchronous.database import AsyncDatabase
 from contextvars import ContextVar, Token
 from typing import Optional, Any
 
-logger = getLogger(__file__)
+logger = logging.getLogger(__name__)
 
 _current_db_manager:ContextVar[Optional['DBContext']] = ContextVar('_current_db_manager', default=None)
 class DBManager():
@@ -18,7 +18,7 @@ class DBManager():
       import os
       db_string = os.environ.get("DB_STRING")
       print(f"db string is {db_string}")
-      cls._client = AsyncMongoClient(db_string)
+      cls._client: AsyncMongoClient[Any] = AsyncMongoClient(db_string)
     return cls._instance
 
   @classmethod
@@ -40,7 +40,7 @@ class DBContext():
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
         _current_db_manager.reset(self.prev_token)
-        logger.error(f"exited async with: {exc_val}, {exc_tb}")
+        logger.info(f"exited async with: {exc_val}, {exc_tb}")
         #_db_connection.reset()
 
 def get_current_db_manager() -> 'DBContext':
