@@ -38,7 +38,7 @@ class DBContext():
         self.prev_token = _current_db_manager.set(self)
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: type[Exception], exc_val: Exception, exc_tb: type[Exception]):
         _current_db_manager.reset(self.prev_token)
         logger.info(f"exited async with: {exc_val}, {exc_tb}")
         #_db_connection.reset()
