@@ -1,5 +1,4 @@
 from typing_extensions import Annotated
-from ..database.manager import get_current_db_manager
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -9,7 +8,7 @@ from datetime import datetime
 from pymongo import IndexModel
 from pymongo.asynchronous.cursor import AsyncCursor
 
-
+from ..database.manager import get_current_db_manager
 from .object_id import PyObjectId
 from .configuration import IndexMetadata, Settings
 
@@ -18,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class Query:
-  def __init__(self, cursor: AsyncCursor[Any]):
+  def __init__(self, cursor: AsyncCursor[Dict[str,Any]]):
     self.cursor = cursor
 
   def skip(self, skip: int):

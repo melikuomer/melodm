@@ -1,4 +1,3 @@
-import logging
 from pymongo import AsyncMongoClient
 from pymongo.asynchronous.database import AsyncDatabase
 
@@ -6,6 +5,7 @@ from pymongo.asynchronous.database import AsyncDatabase
 from contextvars import ContextVar, Token
 from typing import Optional, Any
 
+import logging
 logger = logging.getLogger(__name__)
 
 _current_db_manager:ContextVar[Optional['DBContext']] = ContextVar('_current_db_manager', default=None)

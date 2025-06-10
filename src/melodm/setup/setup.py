@@ -1,7 +1,7 @@
 from typing import List
 import asyncio
 
-from melodm.database.manager import DBContext
+from ..database.manager import DBContext
 from ..types.document import Document
 
 
